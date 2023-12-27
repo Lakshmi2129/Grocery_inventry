@@ -1,4 +1,14 @@
 // Show Goal
+
+const card_trigger = () => {
+	$.post('item_count', function (res) {
+		$('#item_count').html(res.item_count)
+		$('#quantity_count').html(res.quantity)
+		$('#price_count').html(res.price)
+	})
+}
+card_trigger()
+
 const grocery = () => {
 	$.get('add_grocery_item', function (res) {
 		var ele = '';
@@ -50,7 +60,12 @@ $("#add_grocery_form").on('submit', function (e) {
 				timer: 1500
 			})
 		}
+		setTimeout(() => {
+			location.reload(true);
+		}, "1600");
+		
 		grocery();
+		card_trigger()
 	})
 	return false
 })
@@ -74,7 +89,10 @@ $("#edit_grocery_form").on('submit', function (e) {
 		type: 'PUT',
 		data: form_data,
 		success: function (res) {
+			$("#edit_grocery_form").trigger("reset")
+			hideModal('edit_grocery_modal')
 			if (res.res == 'success') {
+				grocery();
 				Swal.fire({
 					position: 'center',
 					icon: 'success',
@@ -91,16 +109,12 @@ $("#edit_grocery_form").on('submit', function (e) {
 					timer: 1500
 				})
 			}
+			setTimeout(() => {
+				location.reload(true);
+			}, "1600");			card_trigger()
 		},
-		error: function (xhr, status, error) {
-			// Handle error
-		}
+
 	});
-
-	// $.put("add_grocery_item", form_data, function (res) {
-
-	// })
-	// return false
 
 })
 
@@ -135,12 +149,14 @@ const grocery_delete = (camId) => {
 						})
 
 					}
+					card_trigger()
+
 				},
-				error: function (xhr, status, error) {
-					// Handle error
-				}
+
+
 			});
 		}
+
 	})
 }
 
@@ -158,11 +174,11 @@ function hideModal(id) {
 $(document).ready(function () {
 	$('#grocery_data_table').DataTable({
 		"ordering": true,
-		"bPaginate": true,
-		"bLengthChange": true,
+		"bPaginate": false,
+		"bLengthChange": false,
 		"bFilter": false,
 		"bJQueryUI": true,
-		"bInfo": true,
+		"bInfo": false,
 		"bAutoWidth": false
 	});
 });

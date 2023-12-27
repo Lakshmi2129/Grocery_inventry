@@ -5,12 +5,13 @@
   <title>Grocery Inventory</title>
   <link rel="stylesheet" href="{% static 'css/vendors/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/vendors/mdi/css/materialdesignicons.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/assets/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
   <link rel="stylesheet" href="{% static 'css/vendors/datatables.min.css' %}" />
 
 </head>
 
 <!-- Navbar -->
+
 
 <div class="navigation" style="z-index: 111;">
   <div class="d-flex">
@@ -21,24 +22,37 @@
   </div>
   <h1 class="text-center">Grocery Inventory Management</h1>
 
+
+
   <div class="navigation-icon">
     <ul>
       <li class="user-link">
         <div class="d-flex" id="user-name">
           <div>
-            <img class="user-profile m-0" src="static/images/base/manager.png" alt="">
+            <img class="user-profile m-0" onclick="logout()" src="static/images/manager.png" alt="">
+          </div>
+
+          <div class="user-profile-content login" style="display:none">
+
+            <div class="emp-user-profile d-block">
+              <div class="user-nav">
+                <ul class="d-block">
+                  <li class="nav-item">
+                    <ul class="d-block">
+                      <li><a href="/login" class="text-dark fw-bold"><i
+                            class="mdi mdi-logout"></i>Logout</a></li>
+                    </ul>
+                  </li>
+              
+                </ul>
+              </div>
+            </div>
           </div>
 
         </div>
+
       </li>
 
-      <div class="d-flex justify-content-end px-3">
-        <button type="button" class=" btn add_card text-white text-center btn-ms" data-bs-toggle="modal"
-          data-bs-target="#add_grocery_modal">
-          Add Items
-        </button>
-
-      </div>
 
     </ul>
 
@@ -64,7 +78,7 @@
 
         <div class="row py-2 mt-4 text-center">
           <div class="col-12">
-            <h5 class="bolder text-white text-center" id="target_cycle_count">-</h5>
+            <h5 class="bolder text-white text-center" id="item_count">-</h5>
           </div>
         </div>
       </div>
@@ -83,11 +97,11 @@
         <div class="row py-2 mt-4 text-center">
           <div class="col-6 border-right">
             <h5 class="bolder text-white text-center">Quantity</h5>
-            <h5 class="bolder text-white text-center" id="actual_cycle_count">-</h5>
+            <h5 class="bolder text-white text-center" id="quantity_count">-</h5>
           </div>
           <div class="col-6">
             <h5 class="bolder text-white text-center">Price</h5>
-            <h5 class="bolder text-white text-center" id="target_cycle_count">-</h5>
+            <h5 class="bolder text-white text-center" id="price_count">-</h5>
           </div>
         </div>
       </div>
@@ -96,10 +110,17 @@
   </div>
 
 
+  <div class="d-flex justify-content-end px-3 mt-3">
+    <button type="button" class=" btn add_card text-white text-center btn-ms" data-bs-toggle="modal"
+      data-bs-target="#add_grocery_modal">
+      Add Items
+    </button>
+
+  </div>
 
 
   <div class="">
-    <table class="table text-white  table-hover mt-5 text-center" id="grocery_data_table">
+    <table class="table text-white  mt-5 text-center mb-3" id="grocery_data_table">
       <thead>
         <tr>
           <th>Item name</th>
@@ -130,7 +151,7 @@
               <label class="col-sm-3 col-form-label">
                 Item Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" name="name" required />
+                <input type="text" class="form-control" name="name" autocomplete="off" required />
               </div>
             </div>
 
@@ -138,7 +159,7 @@
               <label class="col-sm-3 col-form-label">
                 Quantity</label>
               <div class="col-sm-9">
-                <input type="number" class="form-control" name="quantity" required />
+                <input type="number" class="form-control" name="quantity" autocomplete="off" required />
               </div>
             </div>
 
@@ -146,7 +167,7 @@
               <label class="col-sm-3 col-form-label">
                 Price</label>
               <div class="col-sm-9">
-                <input type="number" class="form-control" name="price" required />
+                <input type="number" class="form-control" name="price" autocomplete="off" required />
               </div>
             </div>
 
@@ -168,7 +189,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5>Edit Target</h5>
+          <h5>Edit Items</h5>
         </div>
         <div class="modal-body">
           <div>
@@ -179,7 +200,7 @@
                 <label class="col-sm-3 col-form-label">
                   Item Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control item_name" name="edit_name" required />
+                  <input type="text" class="form-control item_name" name="edit_name" autocomplete="off" readonly required />
                 </div>
               </div>
 
@@ -187,7 +208,7 @@
                 <label class="col-sm-3 col-form-label">
                   Quantity</label>
                 <div class="col-sm-9">
-                  <input type="number" class="form-control item_quantity" name="edit_quantity" required />
+                  <input type="number" class="form-control item_quantity" name="edit_quantity" autocomplete="off" required />
                 </div>
               </div>
 
@@ -195,13 +216,13 @@
                 <label class="col-sm-3 col-form-label">
                   Price</label>
                 <div class="col-sm-9">
-                  <input type="number" class="form-control item_price" name="edit_price" required />
+                  <input type="number" class="form-control item_price" name="edit_price" autocomplete="off" required />
                 </div>
               </div>
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary">Update</button>
               </div>
             </form>
           </div>
@@ -223,3 +244,4 @@
 <script type="application/javascript" src="{% static 'js/vendors/sweetalert2@10.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/vendors/select2.min.js' %}"></script>
 <script type="application/javascript" src="{%static 'js/index.js'%}"></script>
+<script type="application/javascript" src="{%static 'js/login.js'%}"></script>
