@@ -56,6 +56,8 @@ This repository contains code for an Inventory Management web application develo
 
 
 ### Dependencies
-
+- Python
 - Django
+- JavaScript
 - localStoragePy
+- Bootstrap
