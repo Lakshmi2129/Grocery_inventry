@@ -54,6 +54,8 @@ This repository contains code for an Inventory Management web application develo
 3. Run migrations: `python manage.py makemigrations` and `python manage.py migrate`.
 4. Start the development server: `python manage.py runserver`.
 
+Demo Video Link : https://drive.google.com/file/d/12wUtWVobjJGs2chIds32Fpdj1Fu10qp-/view?usp=drive_link
+
 
 ### Dependencies
 - Python
